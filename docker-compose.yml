@@ -21,15 +21,10 @@ services:
   galaxy:
     build:
       context: .
-      dockerfile_inline: |
-        FROM galaxy/galaxy-min:${GALAXY_VERSION}
-        USER root
-        RUN apt update && apt -y install docker.io
-        USER galaxy
-        COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-        ENV HOME=/tmp
-        ENV UV_CACHE=/tmp/uv_cache
-        RUN uv add boto3
+      dockerfile: galaxy/build/Dockerfile
+      args:
+        - GALAXY_VERSION=${GALAXY_VERSION}
+    image: galaxy-rse:${GALAXY_VERSION}
     restart: unless-stopped
     group_add:
       - ${DOCKER_GID}
