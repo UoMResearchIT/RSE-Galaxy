@@ -8,6 +8,4 @@
   endpoint_url: "http://minio:9000"
   bucket: galaxy
   key: $MINIO_ACCESS_KEY
-  secret: $MINOI_SECRET_KEY
-
-
+  secret: $MINIO_SECRET_KEY
