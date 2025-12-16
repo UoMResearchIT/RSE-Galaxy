@@ -26,7 +26,6 @@ RUN if [ -f /tmp/uv.lock.${GALAXY_VERSION} ]; then \
         cp /tmp/uv.lock.${GALAXY_VERSION} uv.lock && uv sync --frozen ; \
         [ -z $(diff uv.lock /tmp/uv.lock.${GALAXY_VERSION}) ] || exit 1; \
     else \
-        echo "No uv.lock file found for GALAXY_VERSION=${GALAXY_VERSION}!" ; \
-        PINNED_PKG="fastapi-slim==$(uv pip show fastapi-slim | grep Version | cut -d' ' -f2)" ; \
-        uv add boto3 $PINNED_PKG ; \
+        echo "No uv.lock file found for GALAXY_VERSION=${GALAXY_VERSION}!" \
+             "Generate one manually and commit as ./galaxy/build/uv.lock.${GALAXY_VERSION}" ; \
     fi
