@@ -89,6 +89,8 @@ services:
     environment:
       MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
       MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      GALAXY_ID_SECRET: ${GALAXY_ID_SECRET}
+      GALAXY_API_KEY: ${GALAXY_API_KEY}
     volumes:
       - ./galaxy/config/:/work
       - galaxy-store:/galaxy/server/
