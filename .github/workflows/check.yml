@@ -25,3 +25,5 @@ jobs:
           context: ./galaxy/build
           file: ./galaxy/build/Dockerfile
           push: false
+          build-args: |
+            GALAXY_VERSION: ${{ vars.GALAXY_VERSION }}
