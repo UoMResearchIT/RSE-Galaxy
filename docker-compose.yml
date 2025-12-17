@@ -20,8 +20,8 @@ services:
     
   galaxy:
     build:
-      context: .
-      dockerfile: galaxy/build/Dockerfile
+      context: galaxy/build
+      dockerfile: Dockerfile
       args:
         - GALAXY_VERSION=${GALAXY_VERSION}
     image: galaxy-rse:${GALAXY_VERSION}
