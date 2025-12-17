@@ -40,8 +40,10 @@ jobs:
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: ./galaxy/build
+          context: ./galaxy/
           file: ./galaxy/build/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            GALAXY_VERSION=${{ env.GALAXY_VERSION }}
