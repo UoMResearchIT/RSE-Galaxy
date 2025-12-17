@@ -46,4 +46,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            GALAXY_VERSION: ${{ vars.GALAXY_VERSION }}
+            GALAXY_VERSION: ${{ env.GALAXY_VERSION }}
