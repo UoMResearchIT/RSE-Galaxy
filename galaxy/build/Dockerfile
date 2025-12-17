@@ -24,5 +24,6 @@ RUN if [ -f /tmp/uv.lock.${GALAXY_VERSION} ]; \
       uv sync --frozen ; \
     else \
       echo "No uv.lock file found for GALAXY_VERSION=${GALAXY_VERSION}!" ; \
+           "Generate one manually and commit as ./galaxy/build/uv.lock.${GALAXY_VERSION}" ; \
       exit 1 ; \
     fi
