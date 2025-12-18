@@ -89,6 +89,7 @@ services:
     volumes:
       - ./galaxy/config/:/work
       - galaxy-config:/galaxy/server/config
+      - galaxy-database:/galaxy/server/database
     working_dir: /work
     command: /template.sh
     

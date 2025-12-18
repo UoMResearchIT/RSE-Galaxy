@@ -8,3 +8,5 @@ for file in /work/*.template; do
   echo "Rendered $file → $out"
   cat "$out"
 done
+
+chown -R 10001:10001 /galaxy/server/database
