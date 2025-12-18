@@ -35,6 +35,7 @@ services:
       # Persistant storage for Galaxy
       - galaxy-config:/galaxy/server/config
       - galaxy-static:/galaxy/server/static
+      - galaxy-database:/galaxy/server/database
       - file-store:/file-store
       # Populate the instance
       - ./galaxy/tools:/galaxy/server/tools/
@@ -164,6 +165,8 @@ volumes:
     name: galaxy-config
   galaxy-static:
     name: galaxy-static
+  galaxy-database:
+    name: galaxy-database
   file-store:
     name: file-store
   minio-data:
