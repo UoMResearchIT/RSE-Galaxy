@@ -19,12 +19,7 @@ services:
       - galaxy
     
   galaxy:
-    build:
-      context: galaxy/build
-      dockerfile: Dockerfile
-      args:
-        - GALAXY_VERSION=${GALAXY_VERSION}
-    image: galaxy-rse:${GALAXY_VERSION}
+    image: ghcr.io/uomresearchit/rse-galaxy:main
     restart: unless-stopped
     group_add:
       - ${DOCKER_GID}
