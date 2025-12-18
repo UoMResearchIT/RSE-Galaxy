@@ -10,7 +10,7 @@ services:
     depends_on:
       - galaxy
     volumes:
-      - galaxy-store:/galaxy/server/
+      - galaxy-static:/galaxy/server/static
       - ./nginx/galaxy.conf:/etc/nginx/conf.d/default.conf:ro
       - ./galaxy/config/welcome.html:/galaxy/server/static/welcome.html
     ports:
@@ -38,10 +38,9 @@ services:
     container_name: ${PROJECT_NAME}-galaxy
     volumes:
       # Persistant storage for Galaxy
-      - galaxy-store:/galaxy/server/
+      - galaxy-config:/galaxy/server/config
+      - galaxy-static:/galaxy/server/static
       - file-store:/file-store
-      # TUSD binary
-      - ./galaxy/tusd:/usr/local/sbin/tusd
       # Populate the instance
       - ./galaxy/tools:/galaxy/server/tools/
       # Add custom configuration files
@@ -93,7 +92,7 @@ services:
       GALAXY_API_KEY: ${GALAXY_API_KEY}
     volumes:
       - ./galaxy/config/:/work
-      - galaxy-store:/galaxy/server/
+      - galaxy-config:/galaxy/server/config
     working_dir: /work
     command: /template.sh
     
@@ -166,8 +165,10 @@ networks:
 volumes:
   pgdata:
     name: pgdata
-  galaxy-store:
-    name: galaxy-store
+  galaxy-config:
+    name: galaxy-config
+  galaxy-static:
+    name: galaxy-static
   file-store:
     name: file-store
   minio-data:
