@@ -89,6 +89,8 @@ services:
     environment:
       MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
       MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      GALAXY_ID_SECRET: ${GALAXY_ID_SECRET}
+      GALAXY_API_KEY: ${GALAXY_API_KEY}
     volumes:
       - ./galaxy/config/:/work
       - galaxy-store:/galaxy/server/
@@ -97,7 +99,7 @@ services:
     
   galaxy-postgres:
     container_name: ${PROJECT_NAME}-galaxy-postgres
-    image: postgres
+    image: postgres:17
     restart: unless-stopped
     secrets: [GALAXY_STORAGE_PASSWORD]
     ports:
@@ -108,6 +110,8 @@ services:
       POSTGRES_DB: galaxy
     networks:
       - galaxy
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U galaxy"]
       interval: 5s
@@ -160,6 +164,8 @@ networks:
   galaxy:
 
 volumes:
+  pgdata:
+    name: pgdata
   galaxy-store:
     name: galaxy-store
   file-store:
