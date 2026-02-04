@@ -184,3 +184,18 @@ docker exec -it <container_id> bash
 # galaxyctl follow
 ```
   
+To run the unit tests defined in the tool XML, trigger the optional `tool-tests` service in the `docker-compose.yml` file:
+
+```bash
+docker compose up tool-tests
+```
+
+During development, you can run tests from a local `planemo` installation against your running Galaxy instance using a command like:
+
+```sh
+uv tool run planemo test \
+  --engine external_galaxy \
+  --galaxy_url 'http://localhost' \
+  --galaxy_admin_key $GALAXY_API_KEY \
+  path/to/tool.xml
+```
