@@ -47,6 +47,14 @@ Here is an example `tool.xml` file (the `letter_count` tool):
   <outputs>
     <data format="csv" name="output_file" label="Letter Count" help="Output file containing the letter count" />
   </outputs>
+
+  <tests>
+  <test expect_exit_code="0">
+      <param name="input_file" value="input.txt"/>
+      <output name="output_file" file="output.csv">
+      </output>
+  </test>
+  </tests>
   
   <help>
     This tool counts the number of letter in each word of a file.
@@ -107,6 +115,20 @@ This section specifies the inputs that the tool requires. In this case, the tool
 ```
 
 This section specifies the outputs that the tool produces. In this case, the tool produces a CSV file.
+
+---
+
+```xml
+  <tests>
+  <test expect_exit_code="0">
+      <param name="input_file" value="input.txt"/>
+      <output name="output_file" file="output.csv">
+      </output>
+  </test>
+  </tests>
+```
+
+This section specifies tests for the tool, to ensure that it works as expected given some known inputs. The test inputs (and reference outputs, if any) should be placed in a `test-data` directory next to the tool XML. It is possible to define "looser" tests that check for properties of the output rather than exact matches.  See [word_count.xml](../galaxy/tools/examples/wc/word_count.xml) for a simple example, and the Galaxy [tool schema docs](https://docs.galaxyproject.org/en/master/dev/schema.html#tool-tests) for details.
 
 ---
 

@@ -33,7 +33,22 @@
   <outputs>
     <data format="data" name="output_file" label="Word Count" help="Output file containing the word count" />
   </outputs>
-  
+
+  <tests>
+  <test expect_exit_code="0">
+      <conditional name="input">
+          <param name="select_type" value="text"/>
+          <param name="input_str" value="the quick brown fox jumped over the lazy dog"/>
+      </conditional>
+      <output name="output_file">
+          <assert_contents>
+              <has_line line="9"/>
+              <has_n_lines n="1"/>
+          </assert_contents>
+      </output>
+  </test>
+  </tests>
+
   <help>
     This tool counts the number of words in a string.
   </help>
