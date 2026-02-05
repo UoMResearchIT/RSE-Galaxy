@@ -18,7 +18,15 @@
   <outputs>
     <data format="csv" name="output_file" label="Letter Count" help="Output file containing the letter count" />
   </outputs>
-  
+
+  <tests>
+  <test expect_exit_code="0">
+      <param name="input_file" value="input.txt"/>
+      <output name="output_file" file="output.csv">
+      </output>
+  </test>
+  </tests>
+
   <help>
     This tool counts the number of letter in each word of a file.
   </help>
