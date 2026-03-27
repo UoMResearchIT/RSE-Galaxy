@@ -2,7 +2,7 @@ gravity:
   gunicorn:
     bind: 0.0.0.0:8080
     workers: 2
-    extra_ars: '--forwarded-allow-ips="*"'
+    extra_args: '--forwarded-allow-ips="*"'
     preload: true
   celery:
     concurrency: 2
@@ -44,6 +44,8 @@ galaxy:
   # Job configuration
   cleanup_job: never
   data_dir: /galaxy/server/database
+  file_path: datasets
+  job_working_directory: jobs
   enable_celery_tasks: true
   
   # Automation / Ease of Use / User-facing features
@@ -96,31 +98,46 @@ galaxy:
         path: database/job_working_directory_s3
   object_store_store_by: uuid
 
-  # File sources
-  file_sources_config_file: /galaxy/server/config/file_sources_conf.yml
+  # File Paths (see galaxy/init/template.sh)
 
-  # File paths
-  builds_file_path: /galaxy/server/tool-data/shared/ucsc/builds.txt.sample
-  container_resolvers_config_file: ''
-  data_manager_config_file: /galaxy/server/config/data_manager_conf.xml.sample
-  datatypes_config_file: /galaxy/server/config/datatypes_conf.xml
-  #dependency_resolvers_config_file: /galaxy/server/config/dependency_resolvers_conf.xml
-  external_service_type_config_file: /galaxy/server/config/external_service_types_conf.xml.sample
-  file_path: /galaxy/server/database/datasets
-  integrated_tool_panel_config: /galaxy/server/config/integrated_tool_panel.xml
-  job_metrics_config_file: /galaxy/server/config/job_metrics_conf.xml
-  job_working_directory: /galaxy/server/database/jobs
-  migrated_tools_config: /galaxy/server/config/migrated_tools_conf.xml
-  object_store_templates_config_file: /galaxy/server/config/minio.yml
-  openid_config_file: /galaxy/server/config/openid_conf.xml.sample
-  shed_data_manager_config_file: /galaxy/server/config/shed_data_manager_conf.xml
-  shed_tool_config_file: /galaxy/server/config/shed_tool_conf.xml
-  shed_tool_data_table_config: /galaxy/server/config/shed_tool_data_table_conf.xml
-  tool_config_file: /galaxy/server/config/tool_conf.xml.sample
-  job_config_file: /galaxy/server/config/job_conf.xml
+  # Static Config Files ----
+  config_dir: /galaxy/server/config
+
+  file_sources_config_file: file_sources_conf.yml
+
+  data_manager_config_file: data_manager_conf.xml.sample
+  datatypes_config_file: datatypes_conf.xml
+  job_metrics_config_file: job_metrics_conf.xml
+  object_store_templates_config_file: minio.yml
+  tool_config_file: tool_conf.xml.sample
+  job_config_file: job_conf.xml
+  tool_data_table_config_path: tool_data_table_conf.xml.sample
+  tool_sheds_config_file: tool_sheds_conf.xml.sample
+
+  # Dynamic Config Files (edited by Galaxy admin UI, volume persistent) ----
+  managed_config_dir: /galaxy/server/database/config
+
+  integrated_tool_panel_config: integrated_tool_panel.xml
+  migrated_tools_config: migrated_tools_conf.xml
+  shed_data_manager_config_file: shed_data_manager_conf.xml
+  shed_tool_config_file: shed_tool_conf.xml
+  shed_tool_data_table_config: shed_tool_data_table_conf.xml
+
+  # Shed Tools & Tool Data ----
   tool_data_path: /galaxy/server/database/tool_data
-  tool_data_table_config_path: /galaxy/server/config/tool_data_table_conf.xml.sample
-  tool_dependency_dir: /galaxy/server/database/dependencies
-  tool_sheds_config_file: /galaxy/server/config/tool_sheds_conf.xml.sample
-  ucsc_build_sites: /galaxy/server/tool-data/shared/ucsc/ucsc_build_sites.txt.sample
+  builds_file_path: shared/ucsc/builds.txt.sample
+
   visualization_plugins_directory: config/plugins/visualizations
+  #tool_test_data_directories: test-data,https://github.com/galaxyproject/galaxy-test-data.git
+
+  tool_dependency_dir: /galaxy/server/database/dependencies
+  #dependency_resolvers_config_file: dependency_resolvers_conf.xml
+  #install_tool_dependencies: true
+  #install_repository_dependencies: true
+  #install_resolver_dependencies: true
+
+  container_resolvers_config_file: ''
+  #enable_mulled_containers: true
+  #mulled_channels: conda-forge,bioconda
+  #involucro_path: involucro
+  #involucro_auto_init: true
