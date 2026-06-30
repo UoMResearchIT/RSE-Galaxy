@@ -10,9 +10,9 @@ for file in /work/*.template; do
 done
 
 mkdir -p /galaxy/server/database/config
+mkdir -p /galaxy/server/database/dependencies
 
 dynamic_config_files=(
-  integrated_tool_panel.xml
   migrated_tools_conf.xml
   shed_data_manager_conf.xml
   shed_tool_conf.xml
@@ -20,7 +20,13 @@ dynamic_config_files=(
 )
 echo "Bootstrapping dynamic Galaxy config files..."
 for file in "${dynamic_config_files[@]}"; do
-  src="/galaxy/server/config/$file"
+
+  # Use custom files in ./galaxy/config,
+  # fall back to galaxy image defaults
+  src="/work/$file"
+  if [ ! -f "$src" ]; then
+    src="/galaxy/server/config/$file"
+  fi
   dst="/galaxy/server/database/config/$file"
   if [ ! -f "$dst" ]; then
     echo "Copying $src to $dst"
@@ -29,5 +35,8 @@ for file in "${dynamic_config_files[@]}"; do
     echo "Using existing $dst"
   fi
 done
+
+# Clear the integrated_tool_panel.xml to rebuild the tool index
+rm -f /galaxy/server/database/config/integrated_tool_panel.xml
 
 chown -R 10001:10001 /galaxy/server/database
